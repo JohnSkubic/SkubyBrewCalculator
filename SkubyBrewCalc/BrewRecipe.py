@@ -37,8 +37,8 @@ class BrewRecipe ():
  
   # Public Functions
    
-  def add_hop(self, amount, unit):
-    self._hops.append(Hop(amount, unit)) 
+  def add_hop(self, amount, unit, name):
+    self._hops.append(Hop(amount, unit, name)) 
 
   def print_recipe(self):
     pass 

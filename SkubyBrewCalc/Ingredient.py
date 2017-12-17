@@ -12,14 +12,19 @@
 #
 ################################################################################
 
+from BrewException import BrewException
+
 class Ingredient ():
 
   ##### BEGIN VARIABLES #####
 
   # Private Vars
+  # TODO: Legal units should come from legal options
   _legal_units = ["oz", "lb", "g", "kg"]
   _amount = 0
   _unit = 0
+  _legal_options = []
+  _options = {}
 
   # Public Vars
 
@@ -27,9 +32,11 @@ class Ingredient ():
 
   # Private Functions
 
-  def __init__ (self, amount, unit):
+  def __init__ (self, amount, unit, name):
     self._amount = amount
     self._unit = unit
+    if not name in self._legal_options:
+      raise BrewException(BrewException.E_INVALID_INGREDIENT)
     
   # Public Functions
 

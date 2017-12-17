@@ -13,7 +13,7 @@
 ################################################################################
 
 from Ingredient import Ingredient
-from LegalOptions import legal_hop_types
+from LegalOptions import legal_hops,HOP_AA_IDX
 
 class Hop (Ingredient):
 
@@ -43,9 +43,11 @@ class Hop (Ingredient):
 
   # Private Functions
 
-  def __init__ (self, amount, unit):
-    Ingredient.__init__(self, amount, unit)
-    print "Added Hop" 
+  def __init__ (self, amount, unit, name):
+    self._options = legal_hops
+    self._legal_options = self._options.keys()
+    Ingredient.__init__(self, amount, unit, name)
+    self._aa = self._options[name][HOP_AA_IDX]
  
   # Public Functions
 
