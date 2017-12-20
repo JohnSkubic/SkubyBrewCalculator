@@ -12,6 +12,34 @@
 #
 ################################################################################
 
+# The following comments detail what dictionaries exist in this file (since its yuge)
+#
+# Each dictionary entry contains an array, variables for indexing into the arrays 
+#   are also below
+#
+# Dictionary Name: legal_hops
+# Dictionary_entry Options: 
+#   HOP_AA_IDX = 0
+#   HOP_ID_IDX = 1
+# 
+# Dictionary Name: legal_fermentables
+# Dictionary Entry Options:
+#   FERMENTABLES_TYPE_IDX     = 0
+#   FERMENTABLES_SUBTYPE_IDX  = 1
+#   FERMENTABLES_COLOR_IDX    = 2
+#   FERMENTABLES_PPG_IDX      = 3
+#   FERMENTABLES_ID_IDX       = 4
+# 
+# Dictionary Name: legal_yeasts 
+# Dictionary Entry Options:
+#   YEAST_LAB_IDX           = 0
+#   YEAST_CODE_IDX          = 1
+#   YEAST_TYPE_IDX          = 2
+#   YEAST_FLOCCULATION_IDX  = 3
+#   YEAST_ATTENUATION_IDX   = 4
+#   YEAST_MIN_TEMP_IDX      = 5
+#   YEAST_MAX_TEMP_IDX      = 6
+
 
 # START HOP OPTIONS
 
