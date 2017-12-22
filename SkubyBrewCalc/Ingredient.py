@@ -23,6 +23,7 @@ class Ingredient ():
   _legal_units = ["oz", "lb", "g", "kg"]
   _amount = 0
   _unit = 0
+  _name = ""
   _legal_options = []
   _options = {}
 
@@ -35,12 +36,17 @@ class Ingredient ():
   def __init__ (self, amount, unit, name):
     self._amount = amount
     self._unit = unit
+    self._name = name
     if not name in self._legal_options:
       raise BrewException(BrewException.E_INVALID_INGREDIENT)
     
   # Public Functions
 
   # Get and Set Methods
+  
+  def print_ingredient (self):
+    print "Name: %s" % (self._name)
+    print "Amount: %d %s" % (self._amount, self._unit)
 
   def set_amount(self, amount):
     pass

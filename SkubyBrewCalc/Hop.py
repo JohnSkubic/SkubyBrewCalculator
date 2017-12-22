@@ -13,7 +13,7 @@
 ################################################################################
 
 from Ingredient import Ingredient
-from LegalOptions import legal_hops,HOP_AA_IDX
+from LegalOptions import legal_hops,HOP_AA_IDX,HOP_ID_IDX
 
 class Hop (Ingredient):
 
@@ -30,6 +30,7 @@ class Hop (Ingredient):
 
 
   _aa = 0
+  _id = 0
   _boil_time = 0
   _type = ""
   _use = ""
@@ -48,8 +49,13 @@ class Hop (Ingredient):
     self._legal_options = self._options.keys()
     Ingredient.__init__(self, amount, unit, name)
     self._aa = self._options[name][HOP_AA_IDX]
+    self._id = self._options[name][HOP_ID_IDX]
  
   # Public Functions
+
+  def print_ingredient (self):
+    Ingredient.print_ingredient(self)
+    print "AA: %d" % (self._aa)
 
   # Get and Set Methods
 
