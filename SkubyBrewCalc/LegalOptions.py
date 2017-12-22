@@ -21,6 +21,8 @@
 # Dictionary_entry Options: 
 #   HOP_AA_IDX = 0
 #   HOP_ID_IDX = 1
+#
+# List Name: legal_hop_uses
 # 
 # Dictionary Name: legal_fermentables
 # Dictionary Entry Options:
@@ -131,6 +133,14 @@ legal_hops = {
 "Zenith"                : [9,     80],
 "Zeus"                  : [16,    81]
 }
+
+legal_hop_uses   = [ "Dry Hop",
+                     "Boil",
+                     "Mash",
+                     "First Wort",
+                     "Aroma",
+                     "Whirlpool",  
+                     "Hopback"]
 
 
 # START FERMENTABLES 

@@ -13,6 +13,7 @@
 ################################################################################
 
 from BrewException import BrewException
+from Util import *
 
 class Ingredient ():
 
@@ -49,7 +50,13 @@ class Ingredient ():
     print "Amount: %d %s" % (self._amount, self._unit)
 
   def set_amount(self, amount):
-    pass
+    self._amount = amount
+
+  def set_unit(self, unit):
+    if not unit in self._legal_units:
+      pass #exception
+
+    self._amount = convert_amounts(self._amount, self._unit, unit)
 
   def get_amount(self):
     return _amount

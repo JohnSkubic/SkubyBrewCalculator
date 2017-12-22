@@ -12,17 +12,6 @@
 #
 ################################################################################
 
-class BrewException (Exception):
+def convert_amounts(in_amount, in_unit, out_unit):
+  pass
 
-  ##### BEGIN VARIABLES #####
-
-  # Exceptions
-  E_INVALID_INGREDIENT = "INVALID_INGREDIENT"
-  E_INVALID_HOP_USE    = "INVALID_HOP_USE"
-
-  ##### BEGIN FUNCTIONS #####
-
-  def __init__ (self, code, *args, **kwargs):
-    self.code = code
-    Exception.__init__(self, args, kwargs)
- 

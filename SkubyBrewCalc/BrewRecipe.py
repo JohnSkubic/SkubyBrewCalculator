@@ -24,10 +24,16 @@ class BrewRecipe ():
   # Private Vars
 
   # Public Vars
+
+  # ingredients
   _grains = []
   _fermentables = []
   _hops = []
   _yeast = None 
+
+  # others
+
+  _boil_time = 60
 
   ##### BEGIN FUNCTIONS #####
 
@@ -36,11 +42,12 @@ class BrewRecipe ():
   def __init__ (self):
     self._fermentables = []
     self._hops = []
+    self._boil_time = 60
  
   # Public Functions
    
-  def add_hop(self, amount, unit, name):
-    self._hops.append(Hop(amount, unit, name)) 
+  def add_hop(self, amount, unit, name, use, *args):
+    self._hops.append(Hop(amount, unit, name, use, args)) 
 
   def add_fermentable(self, amount, unit, name):
     self._fermentables.append(Fermentable(amount, unit, name))
@@ -60,7 +67,5 @@ class BrewRecipe ():
     print "Yeast:\n"
     if self._yeast != None:
       self._yeast.print_ingredient()
-
-  # Get and Set Methods
 
 
