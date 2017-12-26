@@ -34,8 +34,11 @@ def convert_amounts(in_amount, in_unit, out_unit):
   return out_oz 
 
 def convert_volume(in_amount, in_unit, out_unit):
-  if in_unit == "gal":
+  if in_unit == "gal" and out_unit != "gal":
     return float(in_amount) * 3.785
-  else:
+  elif in_unit == "L" and out_unit != "L":
     return float(in_amount) / 3.785
+  else:
+    return float(in_amount)
+
 

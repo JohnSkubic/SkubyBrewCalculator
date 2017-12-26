@@ -66,3 +66,5 @@ class Yeast (Ingredient):
 
   # Get and Set Methods
 
+  def get_attenuation (self):
+    return (self._attenuation / 100.0)

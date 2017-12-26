@@ -15,6 +15,7 @@
 from Ingredient import Ingredient
 from LegalOptions import legal_fermentables,FERMENTABLES_TYPE_IDX, FERMENTABLES_SUBTYPE_IDX
 from LegalOptions import FERMENTABLES_COLOR_IDX, FERMENTABLES_PPG_IDX, FERMENTABLES_ID_IDX
+from Util import *
 
 class Fermentable (Ingredient):
 
@@ -55,4 +56,11 @@ class Fermentable (Ingredient):
     print "ppg: %d" % (self._ppg)
 
   # Get and Set Methods
+
+  def get_gravity (self, efficiency, batch_size):
+    amount = convert_amounts(self._amount, self._unit, "lb")
+    if self._type == "Grain": # use efficiency
+      return amount * self._ppg * efficiency / batch_size
+    else:
+      return amount *  self._ppg / batch_size
 
