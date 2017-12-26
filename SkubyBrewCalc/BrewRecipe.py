@@ -16,6 +16,7 @@ from Ingredient import Ingredient
 from Hop import Hop
 from Fermentable import Fermentable
 from Yeast import Yeast
+from Util import *
 
 class BrewRecipe ():
 
@@ -34,6 +35,11 @@ class BrewRecipe ():
   # others
 
   _boil_time = 60
+  _batch_volume = 5
+  _boil_unit = "gal"
+
+  _original_gravity = 1.069
+  _final_gravity = 1.01
 
   ##### BEGIN FUNCTIONS #####
 
@@ -54,6 +60,13 @@ class BrewRecipe ():
 
   def set_yeast(self, name):
     self._yeast = Yeast(0,0, name)
+
+  def get_ibus(self):
+    boil_vol = convert_volume(self._batch_volume, self._boil_unit, "L")
+    ibus = 0.0
+    for hop in self._hops:
+      ibus = ibus + hop.get_ibus(self._original_gravity, self._batch_volume, self._boil_time)
+    return ibus
 
   def print_recipe(self):
     print "Hops:\n"
