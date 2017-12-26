@@ -15,7 +15,7 @@
 from Ingredient import Ingredient
 from BrewException import BrewException
 from LegalOptions import legal_hops,HOP_AA_IDX,HOP_ID_IDX
-from LegalOptions import legal_hop_uses
+from LegalOptions import legal_hop_uses, legal_hop_forms
 from Util import *
 from math import exp 
 
@@ -25,12 +25,14 @@ class Hop (Ingredient):
 
   # Private Vars
   _legal_uses  = []
+  _legal_forms = []
 
   _aa = 0
   _id = 0
   _boil_time = 0
   _type = ""
   _use = ""
+  _form = ""
 
   # Public Vars
 
@@ -42,10 +44,12 @@ class Hop (Ingredient):
     self._options = legal_hops
     self._legal_uses = legal_hop_uses
     self._legal_options = self._options.keys()
+    self._legal_forms = legal_hop_forms
     Ingredient.__init__(self, amount, unit, name)
     self._aa = self._options[name][HOP_AA_IDX]
     self._id = self._options[name][HOP_ID_IDX]
     self.set_use(use, args)    
+    self._form = "pellet"
 
   # Public Functions
 
@@ -53,12 +57,13 @@ class Hop (Ingredient):
     Ingredient.print_ingredient(self)
     print "AA: %d" % (self._aa)
     print "Use: %s" % (self._use)
+    print "Form: %s" % (self._form)
     if self._use == "Boil":
       print "Boil Time: %d" % (self._boil_time)
 
   def _get_utilization(self,time):
-    # U = 1 - e^(-0.04t)  
-    util = (1.0 - exp(-0.04 * float(time)))
+    # U = 1 - e^(-0.04t) 
+    print "TIME: %s " % (time) 
     return util  
 
   # Get and Set Methods
@@ -76,11 +81,14 @@ class Hop (Ingredient):
   def get_ibus (self, gravity, volume, boil_time):
     aaus = self.get_aaus()
     if self._use == "Mash":
-      util = self._get_utilization(boil_time)
+      boil_fact = (1.0 - exp(-0.04 * float(boil_time))) / 4.15
     else:
-      util = self._get_utilization(self._boil_time)
-    grav_factor = pow(0.000125, gravity-1)
-    return aaus*util*grav_factor*29.82/volume
+      boil_fact = (1.0 - exp(-0.04 * float(self._boil_time))) / 4.15
+    bigness_fact = 1.65 * pow(0.000125, gravity-1)
+    util = boil_fact * bigness_fact
+    if self._form == "pellet":
+      util = util * 1.1
+    return  aaus*util*74.9/volume 
 
   def get_aaus (self):
     w_oz = convert_amounts(self._amount, self._unit, "oz")

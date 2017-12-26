@@ -50,6 +50,8 @@ legal_volume_units      = ["gal", "L"]
 
 # START HOP OPTIONS
 
+legal_hop_forms = ["pellet", "whole"]
+
 HOP_AA_IDX = 0
 HOP_ID_IDX = 1
 

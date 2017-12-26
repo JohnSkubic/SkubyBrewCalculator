@@ -69,7 +69,7 @@ class BrewRecipe ():
     return self._efficiency
 
   def get_ibus(self):
-    batch_vol = convert_volume(self._batch_volume, self._boil_unit, "L")
+    batch_vol = convert_volume(self._batch_volume, self._boil_unit, "gal")
     ibus = 0.0
     for hop in self._hops:
       ibus = ibus + hop.get_ibus(self._original_gravity, batch_vol, self._boil_time)
