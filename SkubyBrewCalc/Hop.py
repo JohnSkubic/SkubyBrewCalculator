@@ -93,3 +93,8 @@ class Hop (Ingredient):
   def get_aaus (self):
     w_oz = convert_amounts(self._amount, self._unit, "oz")
     return w_oz*self._aa
+
+  def set_form (self, new_form):
+    if not new_form in self._legal_forms:
+      raise BrewException(BrewException.E_INVALID_HOP_FORM)
+    self._form = new_form 
