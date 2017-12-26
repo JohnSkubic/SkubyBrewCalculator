@@ -64,3 +64,9 @@ class Fermentable (Ingredient):
     else:
       return amount *  self._ppg / batch_size
 
+  def get_srm (self, batch_size):
+    # Morey equation
+    amount_lbs = convert_amounts(self._amount, self._unit, "lb")
+    mcu = self._color*amount_lbs/batch_size
+    srm = 1.4922* pow(mcu,0.6859)
+    return srm 

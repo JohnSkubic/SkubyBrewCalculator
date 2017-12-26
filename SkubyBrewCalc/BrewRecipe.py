@@ -75,6 +75,13 @@ class BrewRecipe ():
       ibus = ibus + hop.get_ibus(self._original_gravity, batch_vol, self._boil_time)
     return ibus
 
+  def get_srm(self):
+    srm = 0.0
+    batch_vol = convert_volume(self._batch_volume, self._boil_unit, "gal")
+    for fermentable in self._fermentables:
+      srm = srm + fermentable.get_srm(batch_vol)
+    return srm
+
   def get_og(self):
     batch_vol = convert_volume(self._batch_volume, self._boil_unit, "gal")
     gravity = 0.0
