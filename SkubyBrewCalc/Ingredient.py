@@ -13,6 +13,7 @@
 ################################################################################
 
 from BrewException import BrewException
+from LegalOptions import legal_ingredient_units
 from Util import *
 
 class Ingredient ():
@@ -20,10 +21,9 @@ class Ingredient ():
   ##### BEGIN VARIABLES #####
 
   # Private Vars
-  # TODO: Legal units should come from legal options
-  _legal_units = ["oz", "lb", "g", "kg"]
+  _legal_units = legal_ingredient_units 
   _amount = 0
-  _unit = 0
+  _unit = "" 
   _name = ""
   _legal_options = []
   _options = {}

@@ -43,6 +43,10 @@
 #   YEAST_MAX_TEMP_IDX      = 6
 #   YEAST_ID_IDX            = 7
 
+# START UNITS
+legal_ingredient_units = ["oz", "lb", "g", "kg"]
+legal_volume_units      = ["gal", "L"] 
+
 
 # START HOP OPTIONS
 

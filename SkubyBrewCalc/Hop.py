@@ -30,9 +30,6 @@ class Hop (Ingredient):
   _type = ""
   _use = ""
 
-  _ibus = 0
-  _aaus = 0
-
   # chart for utilization calculation
   # indices are for the following gravities:
   # 1.030 1.040 1.050 ... 1.120
@@ -73,12 +70,6 @@ class Hop (Ingredient):
     self._id = self._options[name][HOP_ID_IDX]
     self.set_use(use, args)    
 
-  def _calc_bitterness(self):
-    print "TODO: Implement calc bitterness"
-    self._ibus = 0
-    self._aaus = 0
-    
-
   # Public Functions
 
   def print_ingredient (self):
@@ -88,11 +79,21 @@ class Hop (Ingredient):
     if self._use == "Boil":
       print "Boil Time: %d" % (self._boil_time)
 
+  def _get_utilization(self, grav, time):
+    grav_idx = int(grav*100) - 103
+    time_idx = time/5
+    
+    if time_idx > 19:
+      raise BrewException(BrewException.E_INVALID_IBU_TIME) 
+    if grav_idx < 0 or grav_idx > 10:
+      raise BrewException(BrewException.E_INVALID_IBU_GRAVITY)
+
+    return _util[time_idx][grav_idx]
+
   # Get and Set Methods
   
   def set_amount (self, amount):
     Ingredient.set_amount(amount) 
-    self._calc_bitterness()
 
   def set_use (self, use, *args):
     if not use in self._legal_uses:
@@ -100,10 +101,15 @@ class Hop (Ingredient):
     self._use = use
     if use == "Boil":
       self._boil_time = args[0][0]
-    self._calc_bitterness()
 
-  def get_ibus (self):
-    return self._ibus
+  def get_ibus (self, gravity, volume, boil_time):
+    aaus = self.get_aaus()
+    if self._use == "Mash":
+      util = _get_utilization(gravity, boil_time)
+    else:
+      util = _get_utilization(gravity, self._boil_time)
+    return aaus*util*75/volume
 
   def get_aaus (self):
-    return self._aaus
+    w_oz = convert_amounts(self._amount, self._unit, "oz")
+    return w_oz*self._aa

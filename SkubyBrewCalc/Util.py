@@ -15,3 +15,6 @@
 def convert_amounts(in_amount, in_unit, out_unit):
   pass
 
+def convert_volume(in_amount, in_unit, out_unit):
+  pass
+
