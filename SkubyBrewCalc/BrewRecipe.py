@@ -102,7 +102,15 @@ class BrewRecipe ():
 
   def get_abv(self):
     return (self._original_gravity-self._final_gravity)*1.05/self._final_gravity/0.79
-  
+ 
+  def get_stats(self):
+    og  = self.get_og()
+    fg  = self.get_fg()
+    abv = self.get_abv()
+    ibu = self.get_ibus()
+    srm = self.get_srm()
+    return og,fg,abv,ibu,srm
+ 
   def print_recipe(self):
     print "Hops:\n"
     for hop in self._hops: 
