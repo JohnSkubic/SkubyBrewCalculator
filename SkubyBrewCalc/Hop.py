@@ -17,6 +17,7 @@ from BrewException import BrewException
 from LegalOptions import legal_hops,HOP_AA_IDX,HOP_ID_IDX
 from LegalOptions import legal_hop_uses, legal_hop_forms
 from Util import *
+from LegalOptionsUtil import *
 from math import exp 
 
 class Hop (Ingredient):
@@ -44,11 +45,20 @@ class Hop (Ingredient):
     out_dict["form"] = self._form
     out_dict["use"] = self._use
     out_dict["boil_time"] = self._boil_time
+    out_dict["amount"] = self._amount
+    out_dict["unit"] = self._unit
     return out_dict
 
   def init_from_dict (self, in_dict):
-    self._id = out_dict["id"]
-     
+    self._id = in_dict["id"]
+    self._type = in_dict["type"]  
+    self._name = in_dict["name"]
+    self._form = in_dict["form"]
+    self._use = in_dict["use"]
+    self._boil_time = in_dict["boil_time"]
+    self._amount = in_dict["amount"]
+    self._unit = in_dict["unit"]
+    self.init_by_id(self._id)
 
   # Public Vars
 

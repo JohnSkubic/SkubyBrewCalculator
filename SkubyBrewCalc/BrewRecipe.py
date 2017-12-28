@@ -132,16 +132,41 @@ class BrewRecipe ():
     
     #store recipe
     store_dict = {}
-    store_list = [1,2,3]
+    ingr_list = []
 
-    store_dict["INGREDIENTS"] = store_list
+    for hop in hop_copy:
+      ingr_list.append(hop.to_dict())
+    for fermentable in fermentables_copy:
+      ingr_list.append(fermentable.to_dict())
+    ingr_list.append(self._yeast.to_dict())
+
+    store_dict["INGREDIENTS"] = ingr_list
     with open(filename, "w") as f:
       yaml.dump(store_dict, f)
 
   def load_recipe(self, filename):
+    self._hops = []
+    self._fermentables = []
+    self._yeast = None
+
     with open(filename, "r") as f:
       loaded = yaml.safe_load(f)
-    print loaded
+
+    ingr_list = loaded["INGREDIENTS"]
+    for ingr in ingr_list:
+      if ingr["ingredient"] == "hop":
+        my_hop = Hop()
+        my_hop.init_from_dict(ingr)
+        self._hops.append(my_hop)
+      elif ingr["ingredient"] == "fermentable":
+        my_fermentable = Fermentable()
+        my_fermentable.init_from_dict(ingr)
+        self._fermentables.append(my_fermentable)
+      elif ingr["ingredient"] == "yeast":
+        my_yeast = Yeast()
+        my_yeast.init_from_dict(ingr)
+        self._yeast = my_yeast
+      
  
   def print_recipe(self):
     print "Hops:\n"

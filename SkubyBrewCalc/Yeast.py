@@ -44,6 +44,17 @@ class Yeast (Ingredient):
     self._legal_options = self._options.keys()
     Ingredient.__init__(self)
 
+  def to_dict (self):
+    out_dict = {}
+    out_dict["ingredient"] = "yeast"
+    out_dict["id"] = self._id
+    out_dict["name"] = self._name
+    return out_dict
+
+  def init_from_dict (self, in_dict):
+    self._id = in_dict["id"]
+    self._name = in_dict["name"]
+    self.init_by_id(self._id)
 
   def init_by_name(self, name):
     Ingredient.init_by_name(self,name)

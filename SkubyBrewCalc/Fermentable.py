@@ -15,6 +15,7 @@
 from Ingredient import Ingredient
 from LegalOptions import legal_fermentables,FERMENTABLES_TYPE_IDX, FERMENTABLES_SUBTYPE_IDX
 from LegalOptions import FERMENTABLES_COLOR_IDX, FERMENTABLES_PPG_IDX, FERMENTABLES_ID_IDX
+from LegalOptionsUtil import *
 from Util import *
 
 class Fermentable (Ingredient):
@@ -40,6 +41,22 @@ class Fermentable (Ingredient):
     self._legal_options = self._options.keys()
     Ingredient.__init__(self)
 
+
+  def to_dict (self):
+    out_dict = {}
+    out_dict["ingredient"] = "fermentable"
+    out_dict["id"] = self._id
+    out_dict["name"] = self._name
+    out_dict["amount"] = self._amount
+    out_dict["unit"] = self._unit
+    return out_dict 
+
+  def init_from_dict (self, in_dict):
+    self._id = in_dict["id"]
+    self._name = in_dict["name"]
+    self._amount = in_dict["amount"]
+    self._unit = in_dict["unit"]
+    self.init_by_id(self._id)
  
   # Public Functions
 
