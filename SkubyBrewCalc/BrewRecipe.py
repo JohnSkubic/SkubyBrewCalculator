@@ -17,6 +17,8 @@ from Hop import Hop
 from Fermentable import Fermentable
 from Yeast import Yeast
 from Util import *
+import yaml 
+import copy 
 
 class BrewRecipe ():
 
@@ -53,15 +55,20 @@ class BrewRecipe ():
  
   # Public Functions
    
-  def add_hop(self, amount, unit, name, use, *args):
-    self._hops.append(Hop(amount, unit, name, use, args)) 
+  def add_hop(self, amount, unit, name, use, form, boil_time=None):
+    my_hop = Hop()
+    my_hop.init_full_by_name(name, amount, unit, use, form, boil_time)
+    self._hops.append(my_hop) 
 
   def add_fermentable(self, amount, unit, name):
-    self._fermentables.append(Fermentable(amount, unit, name))
+    my_fermentable = Fermentable()
+    my_fermentable.init_full_by_name(name, amount, unit)
+    self._fermentables.append(my_fermentable)
 
   def set_yeast(self, name):
-    self._yeast = Yeast(0,0, name)
-
+    self._yeast = Yeast()
+    self._yeast.init_by_name(name)
+    
   def set_efficiency(self, eff):
     self._efficiency = eff
 
@@ -110,6 +117,31 @@ class BrewRecipe ():
     ibu = self.get_ibus()
     srm = self.get_srm()
     return og,fg,abv,ibu,srm
+
+  def save_recipe(self, filename):
+    #convert recipe to 5 gallon units
+    ratio = 5.0 / convert_volume(self._batch_volume, self._boil_unit, "gal")
+    hop_copy = copy.deepcopy(self._hops)
+    fermentables_copy = copy.deepcopy(self._fermentables)
+    for hop in hop_copy:
+      hop.set_amount(hop.get_amount()*ratio)
+      hop.set_unit("oz")
+    for fermentable in fermentables_copy:
+      fermentable.set_amount(fermentable.get_amount()*ratio)
+      fermentable.set_unit("lb")
+    
+    #store recipe
+    store_dict = {}
+    store_list = [1,2,3]
+
+    store_dict["INGREDIENTS"] = store_list
+    with open(filename, "w") as f:
+      yaml.dump(store_dict, f)
+
+  def load_recipe(self, filename):
+    with open(filename, "r") as f:
+      loaded = yaml.safe_load(f)
+    print loaded
  
   def print_recipe(self):
     print "Hops:\n"

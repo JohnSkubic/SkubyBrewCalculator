@@ -33,6 +33,22 @@ class Hop (Ingredient):
   _type = ""
   _use = ""
   _form = ""
+  _name = ""
+
+  def to_dict (self):
+    out_dict = {}
+    out_dict["ingredient"] = "hop"
+    out_dict["id"]  = self._id
+    out_dict["type"] = self._type
+    out_dict["name"] = self._name
+    out_dict["form"] = self._form
+    out_dict["use"] = self._use
+    out_dict["boil_time"] = self._boil_time
+    return out_dict
+
+  def init_from_dict (self, in_dict):
+    self._id = out_dict["id"]
+     
 
   # Public Vars
 
@@ -40,18 +56,35 @@ class Hop (Ingredient):
 
   # Private Functions
 
-  def __init__ (self, amount, unit, name, use, *args):
+  def __init__ (self):
     self._options = legal_hops
     self._legal_uses = legal_hop_uses
     self._legal_options = self._options.keys()
     self._legal_forms = legal_hop_forms
-    Ingredient.__init__(self, amount, unit, name)
-    self._aa = self._options[name][HOP_AA_IDX]
-    self._id = self._options[name][HOP_ID_IDX]
-    self.set_use(use, args)    
+    Ingredient.__init__(self)
     self._form = "pellet"
 
+
   # Public Functions
+
+  def init_by_name(self, name):
+    Ingredient.init_by_name(self,name)
+    self._aa = self._options[name][HOP_AA_IDX]
+    self._id = self._options[name][HOP_ID_IDX]
+    self._name = name
+   
+  def init_full_by_name(self, name, amount, unit, use, form, boil_time=None):
+    self.init_by_name(name)
+    self.set_all(amount, unit, use, form, boil_time)
+ 
+  def init_by_id(self, my_id):
+    name = get_hop_by_id(my_id)
+    self.init_by_name(name)
+
+  def set_all(self, amount, unit, use, form, boil_time=None):
+    Ingredient.set_all(self, amount, unit)
+    self.set_use(use, boil_time)    
+    self.set_form(form)
 
   def print_ingredient (self):
     Ingredient.print_ingredient(self)
@@ -68,15 +101,12 @@ class Hop (Ingredient):
 
   # Get and Set Methods
   
-  def set_amount (self, amount):
-    Ingredient.set_amount(amount) 
-
-  def set_use (self, use, *args):
+  def set_use (self, use, boil_time=None):
     if not use in self._legal_uses:
       raise BrewException(BrewException.E_INVALID_HOP_USE) 
     self._use = use
     if use == "Boil":
-      self._boil_time = args[0][0][0]
+      self._boil_time = boil_time
 
   def get_ibus (self, gravity, volume, boil_time):
     aaus = self.get_aaus()
@@ -97,4 +127,6 @@ class Hop (Ingredient):
   def set_form (self, new_form):
     if not new_form in self._legal_forms:
       raise BrewException(BrewException.E_INVALID_HOP_FORM)
-    self._form = new_form 
+    self._form = new_form
+
+ 

@@ -16,6 +16,7 @@ from Ingredient import Ingredient
 from LegalOptions import legal_yeasts, YEAST_LAB_IDX, YEAST_CODE_IDX, YEAST_TYPE_IDX
 from LegalOptions import YEAST_FLOCCULATION_IDX, YEAST_ATTENUATION_IDX
 from LegalOptions import YEAST_MIN_TEMP_IDX, YEAST_MAX_TEMP_IDX, YEAST_ID_IDX
+from LegalOptionsUtil import *
 
 class Yeast (Ingredient):
 
@@ -38,10 +39,14 @@ class Yeast (Ingredient):
 
   # Private Functions
 
-  def __init__ (self, amount, unit, name):
+  def __init__ (self):
     self._options = legal_yeasts
     self._legal_options = self._options.keys()
-    Ingredient.__init__(self, amount, unit, name)
+    Ingredient.__init__(self)
+
+
+  def init_by_name(self, name):
+    Ingredient.init_by_name(self,name)
     ingr_list = self._options[name]
     self._lab           = ingr_list[YEAST_LAB_IDX]
     self._code          = ingr_list[YEAST_CODE_IDX]
@@ -51,6 +56,12 @@ class Yeast (Ingredient):
     self._min_temp      = ingr_list[YEAST_MIN_TEMP_IDX]
     self._max_temp      = ingr_list[YEAST_MAX_TEMP_IDX]
     self._id            = ingr_list[YEAST_ID_IDX]
+    self.amount = 0
+
+  def init_by_id(self, my_id):
+    name = get_yeast_by_id(my_id)
+    self.init_by_name(name)
+
  
   # Public Functions
 

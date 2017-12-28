@@ -34,17 +34,31 @@ class Ingredient ():
 
   # Private Functions
 
-  def __init__ (self, amount, unit, name):
-    self._amount = amount
-    self._unit = unit
-    self._name = name
-    if not name in self._legal_options:
-      raise BrewException(BrewException.E_INVALID_INGREDIENT)
+  def __init__ (self):
+    self._amount = 0
+    self._unit = "oz"
+    self._name = ""
     
   # Public Functions
 
+  def init_by_name(self, name):
+    self._name = name
+    if not name in self._legal_options:
+      raise BrewException(BrewException.E_INVALID_INGREDIENT)
+
+  def init_full_by_name(self, name, amount, unit):
+    self.init_by_name(name)
+    self.set_all(amount,unit)
+
+  def init_by_id(self, my_id):
+    pass
+
   # Get and Set Methods
   
+  def set_all (self, amount, unit):
+    self._amount = amount
+    self._unit = unit
+
   def print_ingredient (self):
     print "Name: %s" % (self._name)
     print "Amount: %d %s" % (self._amount, self._unit)
@@ -55,12 +69,11 @@ class Ingredient ():
   def set_unit(self, unit):
     if not unit in self._legal_units:
       pass #exception
-
     self._amount = convert_amounts(self._amount, self._unit, unit)
 
   def get_amount(self):
-    return _amount
+    return self._amount
 
-  def set_unit(self, unit):
+  def to_dict(self):
+    # to be implemented by child
     pass
-

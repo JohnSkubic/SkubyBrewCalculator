@@ -35,19 +35,35 @@ class Fermentable (Ingredient):
 
   # Private Functions
 
-  def __init__ (self, amount, unit, name):
+  def __init__ (self):
     self._options = legal_fermentables
     self._legal_options = self._options.keys()
-    Ingredient.__init__(self, amount, unit, name)
+    Ingredient.__init__(self)
+
+ 
+  # Public Functions
+
+  def init_by_name(self, name):
+    Ingredient.init_by_name(self,name)
     ingr_list = self._options[name]
     self._type    = ingr_list[FERMENTABLES_TYPE_IDX]
     self._subtype = ingr_list[FERMENTABLES_SUBTYPE_IDX]
     self._color   = ingr_list[FERMENTABLES_COLOR_IDX]
     self._ppg     = ingr_list[FERMENTABLES_PPG_IDX]
     self._id      = ingr_list[FERMENTABLES_ID_IDX]
+    self._name    = name
+
+  def init_full_by_name(self, name, amount, unit):
+    self.init_by_name(name)
+    self.set_all(amount, unit)
+
+  def init_by_id(self, my_id):
+    name = get_fermentable_by_id(my_id)
+    self.init_by_name(name)
+    
+  def set_all(self, amount, unit):
+    Ingredient.set_all(self, amount, unit) 
  
-  # Public Functions
-  
   def print_ingredient (self):
     Ingredient.print_ingredient(self)
     print "Type: %s" % (self._type)
