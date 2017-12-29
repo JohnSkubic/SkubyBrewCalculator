@@ -102,3 +102,4 @@ ENV/
 
 #SkubyBrew custom ignores
 *.yml
+*.swp
