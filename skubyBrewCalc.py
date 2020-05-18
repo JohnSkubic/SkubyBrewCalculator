@@ -12,8 +12,7 @@
 #
 ################################################################################
 
-from SkubyBrewCalc.SkubyGUI.SkubyGUI import *
 import sys
 
 if __name__ == "__main__":
-  launchSkubyGUI(sys.argv)
+  print("Implement command line tool!")
